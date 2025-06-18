@@ -12,7 +12,7 @@ exports.login = async (req, res) => {
     // const isMatch = await bcrypt.compare(password, user.password);
     // if (!isMatch) return res.status(401).send('Invalid credentials.');
     if(email == "admin@gmail.com" && password == "admin@123"){
-       const tokan1 = jwt.sign({ email: "admin@gmail.com", role : user.usertype }, jwt_secret);
+       const tokan1 = jwt.sign({ email: "admin@gmail.com", role : "admin" }, jwt_secret);
        res.cookie('token', tokan1,{
         httpOnly : true,
         sameSite : "Strict",

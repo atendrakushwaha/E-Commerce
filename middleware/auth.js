@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const authDashboard = async (req,res,next)=>{
     const token= req.cookies.token
     
+    
     if(!token){
         return res.redirect("/login")
     }
