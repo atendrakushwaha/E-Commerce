@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= product.pname %> | Shopsy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+  <!-- 🧭 Navbar (optional) -->
+  <%- include('assets/header') %>
+
+  <!-- 📦 Product Container -->
+  <div class="max-w-7xl mx-auto px-4 py-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 bg-white p-6 rounded-2xl shadow-xl">
+
+      <!-- 🖼️ Product Image -->
+      <div class="flex justify-center items-center">
+        <img src="/productimage/<%= product.pimage %>" 
+             alt="<%= product.pname %>" 
+             class="rounded-xl w-full h-[400px] object-cover hover:scale-105 transition duration-300" />
+      </div>
+
+      <!-- 📝 Product Info -->
+      <div class="flex flex-col justify-between space-y-6">
+
+        <!-- 🔠 Title & Description -->
+        <div>
+          <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2"><%= product.pname %></h1>
+          <p class="text-gray-600 text-sm leading-relaxed mb-4"><%= product.pdescription %></p>
+
+          <!-- 💰 Price Details -->
+          <div class="text-xl">
+            <span class="text-pink-600 font-bold text-2xl">₹<%= product.pnewprice %></span>
+            <span class="line-through text-gray-400 ml-2">₹<%= product.pprice %></span>
+            <span class="ml-2 text-green-600 text-sm font-medium">
+              (Save ₹<%= product.pprice - product.pnewprice %>)
+            </span>
+          </div>
+        </div>
+
+        <!-- 🔢 Quantity Input -->
+        <div class="w-full md:w-1/2">
+          <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+          <input type="number" id="quantity" name="quantity" min="1" value="1"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500" />
+        </div>
+
+        <!-- 🛒 Add to Cart -->
+        <form action="/addtocart/<%= product._id %>" method="GET" class="pt-2">
+          <!-- Optional: sync quantity input -->
+          <input type="hidden" name="quantity" id="hiddenQuantity" value="1" />
+          <button type="submit"
+            class="w-full py-3 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-lg shadow-md transition duration-300 active:scale-95">
+            🛒 Add to Cart
+          </button>
+        </form>
+        <!-- <form action="">
+          <input type="hidden" name="" id="" value="1">
+          <button type="submit" id="rzp-button" class="w-full py-3 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-lg shadow-md transition duration-300 active:scale-95">
+            Buy Now
+          </button>
+        </form> -->
+
+        <!-- 💡 Delivery or Offer Note -->
+        <p class="text-sm text-gray-500">Free delivery available on orders over ₹499</p>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <!-- 🔄 Quantity Sync Script -->
+  <script>
+    const quantityInput = document.getElementById('quantity');
+    const hiddenQuantity = document.getElementById('hiddenQuantity');
+    quantityInput.addEventListener('input', () => {
+      hiddenQuantity.value = quantityInput.value;
+    });
+  </script>
+
+</body>
+</html>

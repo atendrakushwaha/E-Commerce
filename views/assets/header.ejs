@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopsy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body >
+
+  <!-- 🌐 Header Navbar -->
+  <header class="bg-white shadow sticky top-0 z-50 ">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+
+      <!-- 🔷 Logo -->
+      <div class="text-2xl font-bold text-blue-600 cursor-pointer" onclick="window.location.href='/'">
+        Shopsy
+      </div>
+
+      <!-- 🔍 Search Bar (Smaller Width) -->
+      <div class="w-1/2 mx-4">
+        <input
+          type="text"
+          placeholder="Search for products"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-sm"
+        />
+      </div>
+
+      <!-- 👤 User / Cart / Auth Buttons -->
+      <% if (user) { %>
+      <div class="flex items-center gap-4">
+
+        <!-- 👤 Profile Section -->
+        <a href="/user" class="flex items-center gap-2 group hover:text-blue-600 transition cursor-pointer">
+          <div class="relative w-9 h-9">
+            <img src="/productimage/<%= user.pimage %>" alt="User" class="w-full h-full rounded-full border object-cover" />
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="font-medium text-sm"><%= user.name %></span>
+            <i class="fas fa-caret-down text-xs group-hover:rotate-180 transition-transform"></i>
+          </div>
+        </a>
+
+        <!-- 🛒 Cart Icon -->
+        <a href="/cart" class="relative hover:text-blue-600 transition text-lg">
+          <i class="fas fa-shopping-cart"></i>
+        </a>
+
+        <!-- 🚪 Logout -->
+        <a href="/logout" class="px-3 py-1.5 bg-red-500 text-white rounded hover:bg-red-600 text-sm transition">
+          Logout
+        </a>
+      </div>
+      <% } else { %>
+
+      <!-- 🔐 Login Button -->
+      <a href="/login" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm font-medium">
+        Login
+      </a>
+      <% } %>
+
+    </div>
+  </header>
+
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shopsy - Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+   
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- ✅ Navbar -->
+  <%- include('assets/header') %>
+
+  <!-- 🗂️ Category Mega Menu -->
+  <section class="bg-white py-5 shadow relative z-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-xl font-semibold mb-4">Top Categories</h2>
+      <div class="flex flex-wrap justify-center gap-6">
+        <% const categories = ["men", "women", "kids","Footware", "beauty","home","Kitchen" ,"electronics","Sports"]; %>
+        <% categories.forEach(cat => { %>
+        <div class="relative group text-center shrink-0 w-28 cursor-pointer" onclick="window.location.href='/?pcategory=<%= cat %>'">
+        <!-- <div class="relative group text-center shrink-0 w-28 cursor-pointer category-card" data-category="<%= cat %>"> -->
+
+          <img src="/myimages/<%= cat %>.webp" alt="<%= cat %>" class="mx-auto w-16 h-16 mb-1 rounded-full shadow" />
+          <p class="text-sm capitalize flex items-center justify-center gap-1">
+            <%= cat %> 
+            <i class="fas fa-caret-down text-xl group-hover:rotate-180 transition-transform"></i>
+          </p>
+          <div class="absolute top-full left-0 mt-2 hidden group-hover:flex bg-white shadow-xl p-6 rounded-lg w-max min-w-[300px] text-left z-50 gap-6 text-sm">
+            <% if (cat === "men") { %>
+              <div>
+                <h4 class="font-semibold mb-2">Men's Wear</h4>
+                <ul class="space-y-1">
+                  <li><a href="#" class="hover:text-pink-600">Shirts</a></li>
+                  <li><a href="#" class="hover:text-pink-600">T-Shirts</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Jeans</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-2">Footwear</h4>
+                <ul class="space-y-1">
+                  <li><a href="#" class="hover:text-pink-600">Sneakers</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Loafers</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Formal Shoes</a></li>
+                </ul>
+              </div>
+            <% } else if (cat === "women") { %>
+              <div>
+                <h4 class="font-semibold mb-2">Ethnic Wear</h4>
+                <ul class="space-y-1">
+                  <li><a href="#" class="hover:text-pink-600">Sarees</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Salwar Suits</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Lehengas</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-2">Western Wear</h4>
+                <ul class="space-y-1">
+                  <li><a href="#" class="hover:text-pink-600">Tops</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Dresses</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Skirts</a></li>
+                </ul>
+              </div>
+            <% } else if (cat === "kids") { %>
+              <div>
+                <h4 class="font-semibold mb-2">Boys</h4>
+                <ul class="space-y-1">
+                  <li><a href="#" class="hover:text-pink-600">T-Shirts</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Shorts</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Jeans</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-2">Girls</h4>
+                <ul class="space-y-1">
+                  <li><a href="#" class="hover:text-pink-600">Frocks</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Leggings</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Skirts</a></li>
+                </ul>
+              </div>
+            <% } else if (cat === "beauty") { %>
+              <div>
+                <h4 class="font-semibold mb-2">Makeup</h4>
+                <ul class="space-y-1">
+                  <li><a href="#" class="hover:text-pink-600">Lipstick</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Foundation</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Blush</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-2">Skincare</h4>
+                <ul class="space-y-1">
+                  <li><a href="#" class="hover:text-pink-600">Face Wash</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Moisturizers</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Sunscreen</a></li>
+                </ul>
+              </div>
+            <% } else if (cat === "electronics") { %>
+              <div>
+                <h4 class="font-semibold mb-2">Mobiles</h4>
+                <ul class="space-y-1">
+                  <li><a href="#" class="hover:text-pink-600">Smartphones</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Feature Phones</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-2">Accessories</h4>
+                <ul class="space-y-1">
+                  <li><a href="#" class="hover:text-pink-600">Chargers</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Power Banks</a></li>
+                  <li><a href="#" class="hover:text-pink-600">Cables</a></li>
+                </ul>
+              </div>
+            <% } %>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+
+ <section id="slider" class="relative mx-auto w-[80%] overflow-hidden  ">
+  <div id="sliderTrack" class="flex transition-transform duration-[1200ms] ease-in-out">
+    <div class="min-w-full">
+      <img src="/sliderimage/home slider.webp" alt="1" class="w-full h-[40vh] object-cover" />
+    </div>
+    <div class="min-w-full">
+      <img src="/sliderimage/time slider.webp" alt="2" class="w-full h-[40vh] object-cover" />
+    </div>
+    <div class="min-w-full">
+      <img src="/sliderimage/watch slider.webp" alt="3" class="w-full h-[40vh] object-cover" />
+    </div>
+    <div class="min-w-full">
+      <img src="/sliderimage/Trendy Flats.webp" alt="4" class="w-full h-[40vh] object-cover" />
+    </div>
+    <!-- Loop Clone -->
+    <div class="min-w-full">
+      <img src="/sliderimage/home slider.webp" alt="1-clone" class="w-full h-[40vh] object-cover" />
+    </div>
+  </div>
+</section>
+
+
+  <!-- 💥 Deals with Filter -->
+  <section id="viewproduct" class="py-10 bg-gradient-to-br from-pink-50 to-gray-100  viewproduct  ">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-pink-600 mb-6">Super Dhamaka Deals 💥</h2>
+      <div class="grid md:grid-cols-5 gap-6">
+
+        <!-- Filter Sidebar -->
+        <div class="md:col-span-1 bg-white p-4 rounded shadow">
+          <h3 class="text-lg font-semibold mb-4">Filter By</h3>
+          <form method="get" class="space-y-4">
+           <% if (selectedCategory === 'men') { %>
+             <select name="psubcategory" class="w-full border border-gray-300 rounded px-3 py-2">
+               <option value="">All Subcategories</option>
+               <option value="shirts">Shirts</option>
+               <option value="tshirts">T-Shirts</option>
+               <option value="jeans">Jeans</option>
+               <option value="sneakers">Sneakers</option>
+               <option value="loafers">Loafers</option>
+               <option value="formalshoes">Formal Shoes</option>
+             </select>
+            <% } else if (selectedCategory === 'women') { %>
+              <select name="psubcategory" class="w-full border border-gray-300 rounded px-3 py-2">
+                <option value="">All Subcategories</option>
+                <option value="sarees">Sarees</option>
+                <option value="salwarsuits">Salwar Suits</option>
+                <option value="lehengas">Lehengas</option>
+                <option value="tops">Tops</option>
+                <option value="dresses">Dresses</option>
+                <option value="skirts">Skirts</option>
+              </select>
+            <% } else if (selectedCategory === 'kids') { %>
+              <select name="psubcategory" class="w-full border border-gray-300 rounded px-3 py-2">
+                <option value="">All Subcategories</option>
+                <option value="tshirts">T-Shirts</option>
+                <option value="shorts">Shorts</option>
+                <option value="jeans">Jeans</option>
+                <option value="frocks">Frocks</option>
+                <option value="leggings">Leggings</option>
+                <option value="skirts">Skirts</option>
+              </select>
+            <% } else if (selectedCategory === 'beauty') { %>
+              <select name="psubcategory" class="w-full border border-gray-300 rounded px-3 py-2">
+                <option value="">All Subcategories</option>
+                <option value="lipstick">Lipstick</option>
+                <option value="foundation">Foundation</option>
+                <option value="blush">Blush</option>
+                <option value="facewash">Face Wash</option>
+                <option value="moisturizers">Moisturizers</option>
+                <option value="sunscreen">Sunscreen</option>
+              </select>
+            <% } else if (selectedCategory === 'electronics') { %>
+              <select name="psubcategory" class="w-full border border-gray-300 rounded px-3 py-2">
+                <option value="">All Subcategories</option>
+                <option value="smartphones">Smartphones</option>
+                <option value="featurephones">Feature Phones</option>
+                <option value="chargers">Chargers</option>
+                <option value="powerbanks">Power Banks</option>
+                <option value="cables">Cables</option>
+              </select>
+            <% } %>
+            <select name="pnewprice" class="w-full border border-gray-300 rounded px-3 py-2">
+              <option value="">--Select Price--</option>
+              <option value="200">Under ₹200</option>
+              <option value="500">Under ₹500</option>
+            </select>
+            <button type="submit" class="w-full bg-pink-600 text-white rounded px-4 py-2 hover:bg-pink-700">Apply</button>
+          </form>
+        </div>
+
+        <!-- Product Cards -->
+        <div class="md:col-span-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% products.forEach(product => { %>
+          <div class="bg-white shadow rounded-lg overflow-hidden hover:shadow-lg transition cursor-pointer relative" onclick="window.location.href='/viewproduct/<%= product._id %>'">
+            <img src="/productimage/<%= product.pimage %>" class="w-full h-60 object-cover">
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-1 truncate"><%= product.pname %></h3>
+              <div class="flex items-center gap-3 text-sm">
+                <span class="line-through text-gray-500">₹<%= product.pprice %></span>
+                <span class="text-pink-600 font-bold">₹<%= product.pnewprice %></span>
+              </div>
+            </div>
+
+            <!-- ❤️ Like/Wishlist Icon -->
+            <div class="absolute top-4 right-4 text-2xl cursor-pointer z-10" onclick="event.stopPropagation(); toggleLike(this);">
+              <i class="far fa-heart text-gray-400 hover:text-pink-500 transition duration-300"></i>
+            </div>
+
+          </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-center mt-10">
+  <% if (totalPages > 1) { %>
+    <nav class="inline-flex items-center space-x-1 bg-white shadow-md px-4 py-2 rounded-lg text-sm font-medium">
+      
+      <!-- Prev Button -->
+      <% if (currentPage > 1) { %>
+        <!-- <a href="/?page=<%= currentPage - 1 %>" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">← Prev</a> -->
+         <a href="/?page=<%= currentPage - 1 %>&pcategory=<%= pcategory || '' %>&pnewprice=<%= pnewprice || '' %>&psubcategory=<%= psubcategory || '' %>">
+  ← Prev
+</a>
+      <% } else { %>
+        <span class="px-3 py-1 rounded border border-gray-200 text-gray-400 cursor-not-allowed">← Prev</span>
+      <% } %>
+
+      <!-- Numbered Page Links -->
+      <% for (let i = 1; i <= totalPages; i++) { %>
+        <% if (i === currentPage) { %>
+          <span class="px-3 py-1 rounded bg-pink-600 text-white border border-pink-600"><%= i %></span>
+        <% } else { %>
+          <!-- <a href="/?page=<%= i %>" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"><%= i %></a> -->
+           <a href="/?page=<%= i %>&pcategory=<%= pcategory || '' %>&pnewprice=<%= pnewprice || '' %>&psubcategory=<%= psubcategory || '' %>"
+            class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">
+    <%= i %>
+  </a>
+        <% } %>
+      <% } %>
+
+      <!-- Next Button -->
+      <% if (currentPage < totalPages) { %>
+        <!-- <a href="/?page=<%= currentPage + 1 %>" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Next →</a> -->
+          <a href="/?page=<%= currentPage + 1 %>&pcategory=<%= pcategory || '' %>&pnewprice=<%= pnewprice || '' %>&psubcategory=<%= psubcategory || '' %>"
+          class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Next →</a>
+      <% } else { %>
+        <span class="px-3 py-1 rounded border border-gray-200 text-gray-400 cursor-not-allowed">Next →</span>
+         
+      <% } %>
+
+    </nav>
+  <% } %>
+</div>
+
+
+
+  
+
+  </section>
+  <!-- ❤️ Like Toggle Script -->
+  <script>
+  
+// slider script
+    const track = document.getElementById('sliderTrack');
+    const slides = document.querySelectorAll('#sliderTrack > div');
+    let index = 0;
+
+    function moveSlide() {
+      index++;
+      track.style.transition = 'transform 1s ease-in-out';
+      track.style.transform = `translateX(-${index * 100}%)`;
+
+      if (index === slides.length - 1) {
+        setTimeout(() => {
+          track.style.transition = 'none';
+          track.style.transform = 'translateX(0)';
+          index = 0;
+        }, 1000);
+      }
+    }
+
+    setInterval(moveSlide, 3000);
+
+    // category script
+
+    
+  // document.addEventListener("DOMContentLoaded", () => {
+  //   // Category click
+  //   document.querySelectorAll('.category-card').forEach(card => {
+  //     card.addEventListener('click', () => {
+  //       const id = card.dataset.id;
+  //       const slider = document.getElementById('slider');
+  //       if (slider){
+  //         slider.style.display = 'none';
+  //       }
+
+  //       const category = card.dataset.category;
+  //       if (category) {
+  //         window.location.href = `/?pcategory=${category}`;
+  //       }
+        
+  //     });
+      
+      
+  //   });
+  // });
+
+    // Product card click
+   
+
+    // Wishlist icon click
+   
+
+  function toggleLike(el) {
+    const icon = el.querySelector('i');
+    icon.classList.toggle('far');
+    icon.classList.toggle('fas');
+    icon.classList.toggle('text-gray-400');
+    icon.classList.toggle('text-pink-600');
+    // Optional: send to server via fetch/ajax
+  }
+  
+ 
+
+  </script>
+
+</body>
+</html>

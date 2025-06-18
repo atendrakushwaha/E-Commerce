@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Cart | Shopsy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+  <!-- ✅ Navbar -->
+  <%- include('assets/header') %>
+    
+  <div class="max-w-6xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800 border-b pb-2">Shopping Cart</h1>
+
+    <% if (cartdata && cartdata.items.length > 0) { %>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <!-- 🛒 Cart Items -->
+      <div class="lg:col-span-2 space-y-6">
+        <% let total = 0; %>
+        <% cartdata.items.forEach(item => {
+             const product = item.productID;
+             if (!product) return;
+             const subTotal = product.pnewprice * item.quantity;
+             total += subTotal;
+        %>
+
+        <div class="relative flex flex-col md:flex-row bg-white rounded-xl shadow-md hover:shadow-lg p-4 gap-4 transition duration-300">
+          <!-- Image -->
+          <div class="w-full md:w-24 h-24 flex-shrink-0">
+            <img src="/productimage/<%= product.pimage %>" alt="<%= product.pname %>" class="w-full h-full object-cover rounded-lg" />
+          </div>
+
+          <!-- Details -->
+          <div class="flex-grow">
+            <h2 class="text-lg font-semibold"><%= product.pname %></h2>
+            <p class="text-sm text-gray-500 mt-1">Category: <%= product.pcategory %></p>
+            <div class="mt-2 text-pink-600 font-bold text-lg">₹<%= product.pnewprice %>
+              <span class="text-sm line-through text-gray-400 ml-2 font-normal">₹<%= product.pprice %></span>
+            </div>
+
+            <div class="mt-3 flex items-center gap-3 flex-wrap">
+              <span class="text-sm font-medium">Quantity:</span>
+              <div class="flex items-center gap-2 border border-gray-300 rounded px-2 py-1">
+                <a href="/decreasequantity/<%= product._id %>" class="text-gray-700 hover:text-black px-2 font-bold">
+                  <% if (item.quantity > 1) { %>-<% } else { %><i class="fas fa-trash-alt"></i><% } %>
+                </a>
+                <span class="text-sm"><%= item.quantity %></span>
+                <a href="/increasequantity/<%= product._id %>" class="text-gray-700 hover:text-black px-2 font-bold">+</a>
+              </div>
+              <div class="text-sm text-green-600 font-medium">Subtotal: ₹<%= subTotal %></div>
+            </div>
+          </div>
+
+          <!-- Delete Icon -->
+          <div class="absolute top-3 right-3">
+            <a href="/removeproduct/<%= product._id %>" title="Remove from cart" class="text-red-500 hover:text-red-700 text-xl">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          </div>
+        </div>
+
+        <% }) %>
+      </div>
+
+      <!-- 💰 Price Summary -->
+      <div class="bg-white rounded-xl shadow-md p-6">
+        <h2 class="text-xl font-bold mb-4">Price Details</h2>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between">
+            <span>Price (<%= cartdata.items.length %> items)</span>
+            <span>₹<%= total %></span>
+          </div>
+
+          <% let deliveryCharges = total < 500 ? 50 : 0; %>
+          <div class="flex justify-between">
+            <span>Delivery Charges</span>
+            <span class="<%= deliveryCharges === 0 ? 'text-green-600' : '' %>">
+              <%= deliveryCharges === 0 ? 'Free' : `₹${deliveryCharges}` %>
+            </span>
+          </div>
+
+          <hr class="my-2">
+          <% let grandTotal = total + deliveryCharges; %>
+          <div class="flex justify-between text-lg font-semibold">
+            <span>Total Amount</span>
+            <span>₹<%= grandTotal %></span>
+          </div>
+        </div>
+
+        <!-- 🧾 Razorpay Checkout -->
+        <form action="">
+          <input type="hidden" id="totalAmount" value="<%= grandTotal %>">
+          <button type="button" id="rzp-button"
+            class="mt-6 w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 rounded-lg transition">
+            Proceed to Checkout
+          </button>
+        </form>
+      </div>
+
+    </div>
+    <% } else { %>
+
+    <!-- 🈳 Empty Cart -->
+    <div class="bg-white rounded-xl shadow-md p-10 text-center">
+      <h2 class="text-2xl font-bold mb-2">Your cart is empty</h2>
+      <p class="text-gray-500 mb-4">Looks like you haven’t added anything yet.</p>
+      <a href="/" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-lg transition">Start Shopping</a>
+    </div>
+
+    <% } %>
+  </div>
+
+  <!-- Razorpay Script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    document.getElementById('rzp-button').onclick = async function (e) {
+      e.preventDefault();
+      const amount = document.getElementById('totalAmount').value;
+
+      const response = await fetch('/createOrder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount })
+      });
+
+      const order = await response.json();
+
+      const options = {
+        key: "rzp_test_Jp6SzJrqmNWxKK", // Your test key
+        amount: order.amount,
+        currency: order.currency,
+        order_id: order.id,
+        handler: async function (response) {
+          await fetch('/saveOrder', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              amount: amount
+            })
+          });
+          alert("Payment Successful!");
+        },
+        theme: { color: '#8b5cf6' }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    }
+  </script>
+
+</body>
+</html>

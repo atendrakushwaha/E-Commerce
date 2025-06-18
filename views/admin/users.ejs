@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin - All Users</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white p-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold">Admin - User Management</h1>
+      <a href="/logout" class="text-sm hover:underline">Logout</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto p-6">
+    <h2 class="text-2xl font-bold mb-6">All Registered Users</h2>
+
+    <div class="overflow-x-auto">
+      <table class="w-full bg-white rounded-lg shadow">
+        <thead class="bg-blue-600 text-white">
+          <tr>
+            <th class="py-2 px-4 text-left">#</th>
+            <th class="py-2 px-4 text-left">Profile</th>
+            <th class="py-2 px-4 text-left">Name</th>
+            <th class="py-2 px-4 text-left">Email</th>
+            <th class="py-2 px-4 text-left">Phone</th>
+            <th class="py-2 px-4 text-left">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% user.forEach((user, index) => { %>
+            <tr class="border-b">
+              <td class="py-3 px-4"><%= index + 1 %></td>
+              <td class="py-3 px-4">
+                <img src="/productimage/<%= user.pimage %>" alt="User Image" class="w-12 h-12 rounded-full object-cover">
+              </td>
+              <td class="py-3 px-4 capitalize"><%= user.name %></td>
+              <td class="py-3 px-4"><%= user.email %></td>
+              <td class="py-3 px-4"><%= user.phone %></td>
+              <td class="py-3 px-4">
+                <a href="/deleteuser/<%= user._id %>" 
+                   onclick="return confirm('Are you sure you want to delete this user?')" 
+                   class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
+                  Delete
+                </a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+</body>
+</html>

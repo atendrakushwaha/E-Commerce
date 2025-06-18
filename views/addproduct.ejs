@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Product</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center px-4">
+
+  <div class="w-full max-w-2xl bg-white shadow-md rounded-lg p-8">
+    <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">🛍️ Add New Product</h2>
+
+    <form action="/addproduct" method="POST" enctype="multipart/form-data" class="space-y-4">
+
+      <!-- Product Name -->
+      <div>
+        <label for="pname" class="block text-gray-700 font-medium mb-1">Product Name</label>
+        <input type="text" id="pname" name="pname" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <!-- Product Price -->
+      <div>
+        <label for="pprice" class="block text-gray-700 font-medium mb-1">Original Price</label>
+        <input type="number" id="pprice" name="pprice" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <!-- Discounted Price -->
+      <div>
+        <label for="pnewprice" class="block text-gray-700 font-medium mb-1">Discounted Price</label>
+        <input type="number" id="pnewprice" name="pnewprice" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label for="pdescription" class="block text-gray-700 font-medium mb-1">Description</label>
+        <textarea id="pdescription" name="pdescription" rows="3" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+      </div>
+
+      <!-- Product Image -->
+      <div>
+        <label for="pimage" class="block text-gray-700 font-medium mb-1">Product Image</label>
+        <input type="file" id="pimage" name="pimage" accept="image/*" required
+          class="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <!-- Category -->
+      <div>
+        <label for="pcategory" class="block text-gray-700 font-medium mb-1">Category</label>
+        <select id="pcategory" name="pcategory" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onchange="updateSubCategories()">
+          <option value="">-- Select Category --</option>
+          <option value="women">Women</option>
+          <option value="men">Men</option>
+          <option value="kids">Kids</option>
+          <option value="electronics">Electronics</option>
+          <option value="beauty">Beauty</option>
+          <option value="home">Home</option>
+        </select>
+      </div>
+
+      <!-- Subcategory (Dynamic) -->
+      <div id="subcategoryDiv" style="display: none;">
+        <label for="psubcategory" class="block text-gray-700 font-medium mb-1">Subcategory</label>
+        <select id="psubcategory" name="psubcategory"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <!-- options will be populated dynamically -->
+        </select>
+      </div>
+
+      <!-- Submit -->
+      <div class="text-center">
+        <button type="submit"
+          class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-200">
+          ➕ Add Product
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- JavaScript for Subcategory Logic -->
+  <script>
+    const subcategories = {
+      men: ["Shirts", "Jeans", "T-Shirts", "Shoes", "Watches"],
+      women: ["Sarees", "Tops", "Jewellery", "Handbags", "Footwear"],
+      kids: ["Toys", "Clothes", "School Supplies"],
+      electronics: ["Mobiles", "Laptops", "Accessories"],
+      beauty: ["Makeup", "Skincare", "Haircare"],
+      home: ["Furniture", "Kitchen", "Decor"]
+    };
+
+    function updateSubCategories() {
+      const category = document.getElementById("pcategory").value;
+      const subCatDiv = document.getElementById("subcategoryDiv");
+      const subCatSelect = document.getElementById("psubcategory");
+
+      if (category && subcategories[category]) {
+        subCatSelect.innerHTML = subcategories[category]
+          .map(sub => `<option value="${sub.toLowerCase()}">${sub}</option>`)
+          .join("");
+        subCatDiv.style.display = "block";
+      } else {
+        subCatDiv.style.display = "none";
+        subCatSelect.innerHTML = "";
+      }
+    }
+  </script>
+
+</body>
+</html>

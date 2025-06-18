@@ -1,0 +1,25 @@
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  function payNow() {
+    const options = {
+      key: "<%= key %>",
+      amount: "<%= amount %>00",
+      currency: "INR",
+      name: "My Shop",
+      description: "Payment",
+      order_id: "<%= order_id %>",
+      handler: function (response) {
+        fetch('/payment/success', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(response)
+        })
+        .then(() => window.location.href = '/success')
+        .catch(() => alert("Payment verified failed."));
+      }
+    };
+    const rzp = new Razorpay(options);
+    rzp.open();
+  }
+  window.onload = payNow;
+</script>
