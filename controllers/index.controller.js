@@ -21,7 +21,7 @@ exports.index = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = 6;
     const skip = (page - 1) * limit;
-    const totalProducts = await product.countDocuments(filter);
+    const totalProducts = await product.countDocuments();
     const products = await product.find(filter).skip(skip).limit(limit);
 
     let user = null;
