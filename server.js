@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const app = express();
  require('dotenv').config(); 
+ const mongoose = require('mongoose');
+ mongoose.connect("mongodb+srv://atendrakushwaha9685:rc8NaTaEQGGj1sb6@cluster0.h3hyzjq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
 
 const indexRoutes = require('./routers/index.route'); 
 const signupRoutes = require('./routers/signup.route');
