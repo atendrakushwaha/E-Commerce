@@ -11,7 +11,7 @@ exports.getSellerDashboard = async (req, res) => {
         });
     }
 
-    
+
     try {
         // const totalProducts = await ProductModel.countDocuments();
         // const totalUsers = await Signup.countDocuments();
@@ -39,7 +39,7 @@ exports.getAddProduct = async (req, res) => {
         });
     }
     try {
-        res.render('seller/addproduct');
+        res.render('seller/addProduct');
     } catch (err) {
         console.error('Seller products error:', err);
         res.status(500).send('Internal Server Error');
