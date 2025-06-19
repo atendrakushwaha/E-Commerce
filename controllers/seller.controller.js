@@ -20,9 +20,9 @@ exports.getSellerDashboard = async (req, res) => {
 
         res.render('seller/sellerDash', {
             user,
-            totalProducts,
-            totalUsers,
-            totalOrders
+            // totalProducts,
+            // totalUsers,
+            // totalOrders
         });
     } catch (err) {
         console.error('Seller dashboard error:', err);
