@@ -15,7 +15,7 @@ exports.getSellerDashboard = async (req, res) => {
         const totalProducts = await ProductModel.countDocuments();
         const totalUsers = await Signup.countDocuments();
         const totalOrders = await Order.countDocuments();
-        const pendingOrders = await Order.countDocuments({ status: 'pending' });
+        // const pendingOrders = await Order.countDocuments({ status: 'pending' });
         const user = await Signup.findOne({ email: req.user.email });
 
         res.render('seller/sellerDash', {
