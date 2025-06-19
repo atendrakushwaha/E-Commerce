@@ -19,7 +19,7 @@ exports.getSellerDashboard = async (req, res) => {
          const email = req.user.email 
         const user = await Signup.findOne({ email });
 
-        res.render('seller/sellerPanel', {
+        res.render('sellerPanel', {
             user,
             // totalProducts,
             // totalUsers,
