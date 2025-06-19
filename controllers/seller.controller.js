@@ -39,7 +39,7 @@ exports.getAddProduct = async (req, res) => {
         });
     }
     try {
-        res.render('seller/addProduct');
+        res.render('vendor/addProduct');
     } catch (err) {
         console.error('Seller products error:', err);
         res.status(500).send('Internal Server Error');
@@ -86,7 +86,7 @@ exports.getProductList = async (req, res) => {
     }
     try {
         const products = await ProductModel.find({ sellerId: req.user.userId });
-        res.render('seller/productList', { products });
+        res.render('vendor/productList', { products });
     } catch (err) {
         console.error('Seller products error:', err);
         res.status(500).send('Internal Server Error');
