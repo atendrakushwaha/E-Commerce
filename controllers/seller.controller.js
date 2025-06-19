@@ -18,7 +18,7 @@ exports.getSellerDashboard = async (req, res) => {
         const pendingOrders = await Order.countDocuments({ status: 'pending' });
         const user = await Signup.findOne({ email: req.user.email });
 
-        res.render('sellers/sellerDash', {
+        res.render('seller/sellerDash', {
             user,
             totalProducts,
             totalUsers,
@@ -38,7 +38,7 @@ exports.getAddProduct = async (req, res) => {
         });
     }
     try {
-        res.render('sellers/addproduct');
+        res.render('seller/addproduct');
     } catch (err) {
         console.error('Seller products error:', err);
         res.status(500).send('Internal Server Error');
@@ -85,7 +85,7 @@ exports.getProductList = async (req, res) => {
     }
     try {
         const products = await ProductModel.find({ sellerId: req.user.userId });
-        res.render('sellers/productList', { products });
+        res.render('seller/productList', { products });
     } catch (err) {
         console.error('Seller products error:', err);
         res.status(500).send('Internal Server Error');
