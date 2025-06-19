@@ -12,10 +12,10 @@ exports.getSellerDashboard = async (req, res) => {
     }
 
     try {
-        const totalProducts = await ProductModel.countDocuments();
-        const totalUsers = await Signup.countDocuments();
-        const totalOrders = await Order.countDocuments();
- 
+        // const totalProducts = await ProductModel.countDocuments();
+        // const totalUsers = await Signup.countDocuments();
+        // const totalOrders = await Order.countDocuments();
+         
         const user = await Signup.findOne({ email: req.user.email });
 
         res.render('seller/sellerDash', {

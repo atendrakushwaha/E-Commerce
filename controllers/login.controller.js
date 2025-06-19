@@ -12,8 +12,8 @@ exports.login = async (req, res) => {
     // const isMatch = await bcrypt.compare(password, user.password);
     // if (!isMatch) return res.status(401).send('Invalid credentials.');
     if(email == "admin@gmail.com" && password == "admin@123"){
-       const tokan1 = jwt.sign({ email: "admin@gmail.com", role : "admin" }, jwt_secret);
-       res.cookie('token', tokan1,{
+       const token1 = jwt.sign({ email: "admin@gmail.com", role : "admin" }, jwt_secret);
+       res.cookie('token', token1,{
         httpOnly : true,
         sameSite : "Strict",
         secure : false
@@ -22,8 +22,8 @@ exports.login = async (req, res) => {
     } else if (user.usertype == "seller") {
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return res.status(401).send('Invalid credentials.');
-      const tokan = jwt.sign({ email,role : user.usertype, userId: user._id ,username : user.name }, jwt_secret);
-      res.cookie('token', tokan,{
+      const token = jwt.sign({ email,role : user.usertype, userId: user._id ,username : user.name }, jwt_secret);
+      res.cookie('token', token,{
         httpOnly : true,
         sameSite : "Strict",
         secure : false
@@ -32,8 +32,8 @@ exports.login = async (req, res) => {
     } else {
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return res.status(401).send('Invalid credentials.');
-      const tokan = jwt.sign({ email,role : user.usertype, userId: user._id ,username : user.name }, jwt_secret);
-      res.cookie('token', tokan,{
+      const token = jwt.sign({ email,role : user.usertype, userId: user._id ,username : user.name }, jwt_secret);
+      res.cookie('token', token,{
         httpOnly : true,
         sameSite : "Strict",
         secure : false
