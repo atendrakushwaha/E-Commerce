@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Product</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center px-4">
+
+  <div class="w-full max-w-2xl bg-white shadow-md rounded-lg p-8">
+    <a href="/seller" class="text-blue-600 hover:underline">Back</a>
+    <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">🛍️ Add New Product</h2>
+    
+    <form action="/seller/addproduct" method="POST" enctype="multipart/form-data" class="space-y-4">
+
+      <!-- Product Name -->
+      <div>
+        <label class="block font-medium text-gray-700 mb-1">Product Name</label>
+        <input type="text" name="pname" required class="w-full border px-3 py-2 rounded focus:ring focus:ring-blue-300" />
+      </div>
+
+      <!-- Prices -->
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-medium text-gray-700 mb-1">Original Price</label>
+          <input type="number" name="pprice" required class="w-full border px-3 py-2 rounded focus:ring focus:ring-blue-300" />
+        </div>
+        <div>
+          <label class="block font-medium text-gray-700 mb-1">Discounted Price</label>
+          <input type="number" name="pnewprice" required class="w-full border px-3 py-2 rounded focus:ring focus:ring-blue-300" />
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label class="block font-medium text-gray-700 mb-1">Description</label>
+        <textarea name="pdescription" rows="3" required class="w-full border px-3 py-2 rounded focus:ring focus:ring-blue-300"></textarea>
+      </div>
+
+      <!-- Category -->
+      <div>
+        <label class="block font-medium text-gray-700 mb-1">Category</label>
+        <select name="pcategory" id="pcategory" onchange="updateSubCategories()" required class="w-full border px-3 py-2 rounded focus:ring focus:ring-blue-300">
+          <option value="">-- Select Category --</option>
+          <option value="men">Men</option>
+          <option value="women">Women</option>
+          <option value="kids">Kids</option>
+          <option value="electronics">Electronics</option>
+          <option value="beauty">Beauty</option>
+          <option value="home">Home</option>
+        </select>
+      </div>
+
+      <!-- Subcategory (Dynamic) -->
+      <div id="subcategoryDiv" style="display: none;">
+        <label for="psubcategory" class="block font-medium text-gray-700 mb-1">Subcategory</label>
+        <select name="psubcategory" id="psubcategory" class="w-full border px-3 py-2 rounded focus:ring focus:ring-blue-300">
+          <!-- dynamically added -->
+        </select>
+      </div>
+
+      <!-- Image Upload with Preview -->
+      <div>
+        <label class="block font-medium text-gray-700 mb-1">Product Image</label>
+        <input type="file" name="pimage" id="imageInput" accept="image/*" required class="w-full border px-2 py-1 rounded" onchange="previewImage()" />
+        <div id="imagePreview" class="mt-4 hidden">
+          <p class="text-sm text-gray-500 mb-1">Image Preview:</p>
+          <img id="preview" src="#" alt="Image Preview" class="w-40 h-40 object-cover rounded border" />
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="text-center">
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded">
+          ➕ Add Product
+        </button>
+
+      </div>
+    </form>
+  </div>
+
+  <!-- JS: Subcategory & Image Preview -->
+  <script>
+    const subcategories = {
+      men: ["Shirts", "Jeans", "T-Shirts", "Shoes", "Watches"],
+      women: ["Sarees", "Tops", "Jewellery", "Handbags", "Footwear"],
+      kids: ["Toys", "Clothes", "School Supplies"],
+      electronics: ["Mobiles", "Laptops", "Accessories"],
+      beauty: ["Makeup", "Skincare", "Haircare"],
+      home: ["Furniture", "Kitchen", "Decor"]
+    };
+
+    function updateSubCategories() {
+      const category = document.getElementById("pcategory").value;
+      const subCatDiv = document.getElementById("subcategoryDiv");
+      const subCatSelect = document.getElementById("psubcategory");
+
+      if (category && subcategories[category]) {
+        subCatSelect.innerHTML = subcategories[category]
+          .map(sub => `<option value="${sub.toLowerCase()}">${sub}</option>`)
+          .join("");
+        subCatDiv.style.display = "block";
+      } else {
+        subCatDiv.style.display = "none";
+        subCatSelect.innerHTML = "";
+      }
+    }
+
+    function previewImage() {
+      const input = document.getElementById("imageInput");
+      const preview = document.getElementById("preview");
+      const previewDiv = document.getElementById("imagePreview");
+
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          previewDiv.classList.remove("hidden");
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
+
+</body>
+</html>

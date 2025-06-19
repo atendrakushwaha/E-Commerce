@@ -9,7 +9,7 @@ exports.index = async (req, res) => {
   try {
     const { pcategory, pnewprice, psubcategory } = req.query;
 
-    let filter = {};
+    let filter = { status: 'approved' };
     if (pcategory) filter.pcategory = pcategory;
     if (psubcategory) filter.psubcategory = psubcategory;
     if (pnewprice) {

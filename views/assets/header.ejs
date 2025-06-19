@@ -32,7 +32,7 @@
       <div class="flex items-center gap-4">
 
         <!-- 👤 Profile Section -->
-        <a href="/user" class="flex items-center gap-2 group hover:text-blue-600 transition cursor-pointer">
+        <a href="<%= user.role === 'buyer' ? '/user' : '/seller' %>" class="flex items-center gap-2 group hover:text-blue-600 transition cursor-pointer">
           <div class="relative w-9 h-9">
             <img src="/productimage/<%= user.pimage %>" alt="User" class="w-full h-full rounded-full border object-cover" />
           </div>

@@ -10,6 +10,8 @@ const productSchema = new Schema({
         pimage: { type: String, required: true },
         pcategory: { type: String, required: true },
         psubcategory: { type: String, required: true },
+        status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
+        sellerId: { type: Schema.Types.ObjectId, ref: 'signup', required: true }
     });
 
 const product = mongoose.model('product', productSchema);

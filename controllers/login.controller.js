@@ -19,8 +19,16 @@ exports.login = async (req, res) => {
         secure : false
        });
         res.redirect('/admin');
-    } else if (!user) {
-      res.send('Invalid email or password.');
+    } else if (user.usertype == "seller") {
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) return res.status(401).send('Invalid credentials.');
+      const tokan = jwt.sign({ email,role : user.usertype, userId: user._id ,username : user.name }, jwt_secret);
+      res.cookie('token', tokan,{
+        httpOnly : true,
+        sameSite : "Strict",
+        secure : false
+       });
+      res.redirect('/seller');
     } else {
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return res.status(401).send('Invalid credentials.');

@@ -9,7 +9,7 @@ const app = express();
 const indexRoutes = require('./routers/index.route'); 
 const signupRoutes = require('./routers/signup.route');
 const loginRoutes = require('./routers/login.route');
-const addproductRoutes = require('./routers/addproduct.route');
+// const addproductRoutes = require('./routers/addproduct.route');
 const userRoutes = require('./routers/user.route');
 const adminRoutes = require('./routers/admin.route');
 const productRoutes = require('./routers/product.route');
@@ -20,6 +20,7 @@ const headerRoutes = require('./routers/header.route');
 const paymentRoutes = require('./routers/payment.route');
 const myOrderRoutes = require('./routers/myOrder.route');
 const viewUserAdminRoutes = require('./routers/viewUserAdmin.route');
+const sellerRoutes = require('./routers/seller.route');
 
 
 app.use(cookieParser());
@@ -33,7 +34,7 @@ app.use(bodyParser.json())
 app.use('/', signupRoutes);
 app.use('/', loginRoutes);
 app.use('/', indexRoutes);
-app.use('/', addproductRoutes);
+// app.use('/', addproductRoutes);
 app.use('/', userRoutes);
 app.use('/', adminRoutes);
 app.use('/', productRoutes);
@@ -44,6 +45,7 @@ app.use('/', headerRoutes);
 app.use('/', paymentRoutes);
 app.use('/', myOrderRoutes);
 app.use('/', viewUserAdminRoutes);
+app.use('/', sellerRoutes);
 
 
 app.listen(process.env.PORT, () => {
