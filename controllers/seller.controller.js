@@ -92,25 +92,25 @@ exports.getProductList = async (req, res) => {
     }
 };
 
-exports.myOrders = async (req, res) => {
-     if (!req.user || req.user.role !== 'seller') {
-        return res.status(403).render('Massage/Error', {
-            message: '⛔ Access Denied: Sellers Only!',
-            redirectUrl: '/'
-        });
-    }
-  const orders = await Order.find({ sellerId: req.user.userId })
-    .populate('userId', 'name')     // populate buyer name
-    .populate('productId : req.params.id', 'pname : req.params.id.pname'); // populate product name
+// exports.myOrders = async (req, res) => {
+//      if (!req.user || req.user.role !== 'seller') {
+//         return res.status(403).render('Massage/Error', {
+//             message: '⛔ Access Denied: Sellers Only!',
+//             redirectUrl: '/'
+//         });
+//     }
+//   const orders = await Order.find({ sellerId: req.user.userId })
+//     .populate('userId', 'name')     // populate buyer name
+//     .populate('productId : req.params.id', 'pname : req.params.id.pname'); // populate product name
 
-  const formattedOrders = orders.map(order => ({
-    productName: order.productID.pname,
-    buyerName: order.buyerId.name,
-    quantity: order.quantity,
-    amount: order.totalAmount,
-    date: order.createdAt,
-    status: order.status
-  }));
+//   const formattedOrders = orders.map(order => ({
+//     productName: order.productID.pname,
+//     buyerName: order.buyerId.name,
+//     quantity: order.quantity,
+//     amount: order.totalAmount,
+//     date: order.createdAt,
+//     status: order.status
+//   }));
 
-  res.render('seller/orders', { orders: formattedOrders });
-};
+//   res.render('sellers/orders', { orders: formattedOrders });
+// };
