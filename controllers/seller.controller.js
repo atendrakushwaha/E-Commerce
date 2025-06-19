@@ -27,7 +27,7 @@ exports.getSellerDashboard = async (req, res) => {
         });
     } catch (err) {
         console.error('Seller dashboard error:', err);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send('Internal Server Error', err);
     }
 };
 
