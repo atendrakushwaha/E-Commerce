@@ -2,8 +2,7 @@ const product = require('../models/addproduct.model');
 const signup = require('../models/signup.model');
 const jwt = require('jsonwebtoken');
 const authUser = require('../middleware/userAuth');
-
-
+const Wishlist = require('../models/wishlist.model');
 
 exports.index = async (req, res) => {
   try {
@@ -21,16 +20,17 @@ exports.index = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = 6;
     const skip = (page - 1) * limit;
-    const totalProducts = await product.countDocuments();
+    const totalProducts = await product.countDocuments({filter});
     const products = await product.find(filter).skip(skip).limit(limit);
 
     let user = null;
+     let wishlist = [];
     const token = req.cookies.token;
-
     if (token) {
       try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         user = await signup.findById(decoded.userId);
+        wishlist = await Wishlist.find({ userId: user._id }).lean();
       } catch (err) {
         user = null;
       }
@@ -47,6 +47,8 @@ exports.index = async (req, res) => {
       currentPage: page,
       totalPages: Math.ceil(totalProducts / limit),
       limit,
+      wishlist
+      
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

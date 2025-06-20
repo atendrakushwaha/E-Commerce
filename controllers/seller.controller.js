@@ -93,4 +93,36 @@ exports.getProductList = async (req, res) => {
     }
 };
 
+exports.getSellerOrders = async (req, res) => {
+  try {
+    const sellerId = req.user.userId;
+
+    const allOrders = await Order.find();
+
+    // Filter orders to only include products sold by the logged-in seller
+    const filteredOrders = allOrders
+      .map(order => {
+        const sellerProducts = order.product.filter(p =>
+          p?.productID?.sellerId?.toString() === sellerId.toString()
+        );
+
+        if (sellerProducts.length > 0) {
+          return {
+            ...order.toObject(),
+            product: sellerProducts
+          };
+        }
+        return null;
+      })
+      .filter(order => order !== null);
+
+    res.render('vendor/vendororders', { orders: filteredOrders });
+  } catch (error) {
+    console.error('Seller orders error:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
+
+
 

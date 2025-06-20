@@ -13,6 +13,8 @@ router.post('/seller/addproduct', auth,uploadimage.single('pimage'), sellerContr
 router.get('/seller/products/list', auth, sellerController.getProductList);
 
 // router.get('/seller/orders', auth, sellerController.myOrders);
+router.get('/vender/orders', auth, sellerController.getSellerOrders);
+
 
 
 

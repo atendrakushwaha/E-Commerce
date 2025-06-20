@@ -15,5 +15,8 @@ router.get('/editproduct/:id',auth, adminController.editProductPage);
 router.post('/editproduct/:id',auth,uploadimage.single('pimage'), adminController.editProduct);
 router.get('/deleteproduct/:id',auth, adminController.deleteProduct);
 
+router.get('/admin/orders', auth,adminController.getOrders);
+router.post('/admin/orders/:id',auth, adminController.updateOrderStatus);
+
 
 module.exports = router;

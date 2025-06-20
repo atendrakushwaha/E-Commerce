@@ -5,56 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Orders | Shopsy</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans">
 
-  <!-- 🛍️ Page Container -->
-  <div class="max-w-6xl mx-auto px-4 py-10">
-    <h1 class="text-3xl font-bold text-pink-600 mb-8">My Orders</h1>
+  <div class="max-w-5xl mx-auto px-4 py-10">
+    <h1 class="text-2xl font-bold text-pink-600 mb-6">🛍️ My Orders</h1>
 
     <% if (order && order.length > 0) { %>
       <% order.forEach(o => { %>
-        <div class="bg-white shadow-xl rounded-2xl p-6 mb-10 border border-gray-200 hover:shadow-pink-100 transition-shadow duration-300">
+        <div class="bg-white rounded-xl shadow p-5 mb-6 border border-gray-200">
+          
           <!-- 🧾 Order Info -->
-          <div class="grid md:grid-cols-2 gap-4 mb-6">
+          <div class="flex flex-col md:flex-row justify-between mb-4 text-sm text-gray-600">
             <div>
-              <p><i class="fas fa-receipt text-pink-500 mr-2"></i><strong class="text-gray-600">Order ID:</strong> <%= o._id %></p>
-              <p><i class="fas fa-credit-card text-pink-500 mr-2"></i><strong class="text-gray-600">Payment ID:</strong> <%= o.paymentId %></p>
-              <p><i class="fas fa-shipping-fast text-pink-500 mr-2"></i><strong class="text-gray-600">Status:</strong> <%= o.status %></p>
+              <p><strong>Order ID:</strong> <%= o._id %></p>
+              <p><strong>Payment ID:</strong> <%= o.paymentId %></p>
             </div>
-            <div>
-              <p><i class="fas fa-calendar-day text-pink-500 mr-2"></i><strong class="text-gray-600">Delivery Date:</strong> <%= o.deleveryDate %></p>
-              
+            <div class="text-right md:text-left">
+              <p><strong>Status:</strong> <%= o.status %></p>
+              <p><strong>Delivery Date:</strong> <%= o.deleveryDate %></p>
             </div>
           </div>
 
-          <!-- 📦 Products List -->
-          <div>
-            <h2 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Ordered Products</h2>
-
-            <% o.product.forEach(item => { %>
-              <div class="flex flex-col md:flex-row items-center justify-between gap-4 border p-4 rounded-lg mb-4 bg-gray-50">
-                <div class="flex items-center gap-4">
-                  <img src="/productimage/<%= item.productID.pimage %>" alt="Product Image" class="w-24 h-24 object-cover rounded-lg border">
-                  <div>
-                    <h3 class="text-lg font-bold text-gray-800"><%= item.productID.pname %></h3>
-                    <p class="text-gray-600">Price: ₹<%= item.productID.pnewprice %></p>
-                    <p class="text-gray-600">Quantity: <%= item.quantity %></p>
-                  </div>
-                </div>
-                <a href="/order/detail/<%= o._id %>/<%= item.productID._id %>" class="text-blue-600 underline hover:text-blue-800 transition">View Details</a>
+          <!-- 📦 Product List -->
+          <% o.product.forEach(item => { %>
+            <div class="flex items-center gap-4 border-t pt-4 mt-4">
+              <img src="/productimage/<%= item.productID.pimage %>" alt="Product" class="w-16 h-16 object-cover rounded border" />
+              <div class="flex-1">
+                <h2 class="text-base font-semibold"><%= item.productID.pname %></h2>
+                <p class="text-sm text-gray-600">Price: ₹<%= item.productID.pnewprice %> &nbsp; | &nbsp; Qty: <%= item.quantity %></p>
               </div>
-            <% }) %>
+              <a href="/order/detail/<%= o._id %>/<%= item.productID._id %>" class="text-sm text-blue-600 hover:underline">View</a>
+            </div>
+          <% }) %>
+
+          <div class="mt-4 text-right text-lg font-semibold text-green-600">
+            Total: ₹<%= o.amount %>
           </div>
-          <p class="mt-2 text-right mr-5 text-lg text-green-600 font-semibold">Total: ₹<%= o.amount %></p>
         </div>
       <% }) %>
-
+    
     <% } else { %>
-      <div class="text-center py-20 bg-white rounded-xl shadow-md">
-        <i class="fas fa-box-open text-5xl text-gray-300 mb-4"></i>
-        <p class="text-lg font-semibold text-gray-600">You have not placed any orders yet.</p>
+      <div class="text-center bg-white rounded-xl shadow p-10">
+        <p class="text-lg text-gray-500">You haven’t placed any orders yet.</p>
       </div>
     <% } %>
   </div>

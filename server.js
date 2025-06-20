@@ -21,6 +21,7 @@ const paymentRoutes = require('./routers/payment.route');
 const myOrderRoutes = require('./routers/myOrder.route');
 const viewUserAdminRoutes = require('./routers/viewUserAdmin.route');
 const sellerRoutes = require('./routers/seller.route');
+const wishlistRoutes = require('./routers/wishlist.route');
 
 
 app.use(cookieParser());
@@ -46,6 +47,7 @@ app.use('/', paymentRoutes);
 app.use('/', myOrderRoutes);
 app.use('/', viewUserAdminRoutes);
 app.use('/', sellerRoutes);
+app.use('/', wishlistRoutes);
 
 
 app.listen(process.env.PORT, () => {

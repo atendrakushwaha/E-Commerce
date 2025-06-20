@@ -11,7 +11,7 @@
   <!-- 🔝 Navbar -->
   <nav class="bg-white shadow p-4 flex justify-between items-center">
     <h1 class="text-xl font-bold text-indigo-600">📦 My Products</h1>
-    <a href="/seller/dashboard" class="text-indigo-500 hover:underline">← Back to Dashboard</a>
+    <a href="/seller" class="text-indigo-500 hover:underline">← Back to Dashboard</a>
   </nav>
 
   <!-- 📋 Product Table -->
@@ -30,6 +30,7 @@
               <th class="px-4 py-3">Category</th>
               <th class="px-4 py-3">Price</th>
               <th class="px-4 py-3">Status</th>
+              <th class="px-4 py-3">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -49,6 +50,12 @@
                   <% } else { %>
                     <span class="bg-red-200 text-red-800 px-2 py-1 rounded-full text-xs">Rejected</span>
                   <% } %>
+                </td>
+                <td class="px-4 py-3 space-x-2">
+                  <a href="/editproduct/<%= product._id %>" class="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600">Edit</a>
+                  <form action="/deleteproduct/<%= product._id %>" method="POST" class="inline">
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete this product?')" class="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600">Delete</button>
+                  </form>
                 </td>
               </tr>
             <% }) %>

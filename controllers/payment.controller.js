@@ -38,7 +38,8 @@ exports.saveOrder = async (req, res) => {
         _id: item.productID._id,
         pname: item.productID.pname,
         pimage: item.productID.pimage,
-        pnewprice: item.productID.pnewprice
+        pnewprice: item.productID.pnewprice,
+         sellerId: item.productID.sellerId 
       },
       quantity: item.quantity
     }));
@@ -52,11 +53,12 @@ exports.saveOrder = async (req, res) => {
         email     :    useremail,
         product   :    productDetails,
         status    :    'paid',
-        deleveryDate : new Date(Date.now() + 24 * 60 * 60 * 1000)
+        deleveryDate : new Date(Date.now() + 72 * 60 * 60 * 1000)
 
          });
     await order.save();
     await Cart.findOneAndDelete({ userId });
 
     res.status(200).json({ message: 'Order saved successfully' });
+    res.redirect('/cart');
 };

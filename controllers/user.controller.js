@@ -1,6 +1,7 @@
 const Signup = require("../models/signup.model");
 const Cart = require("../models/addtocart.model");
 const Order = require("../models/order.model");
+const Wishlist = require("../models/wishlist.model");
 
 
 exports.getuserdash = async (req, res) => {
@@ -10,13 +11,14 @@ exports.getuserdash = async (req, res) => {
         
         const totalCart = await Cart.countDocuments({ userId });
         const totalOrders = await Order.countDocuments({ userId });
+        const totalWishlist = await Wishlist.countDocuments({ userId });
 
         const user = await Signup.findOne({ email: req.user.email });
         if (!user) {
             return res.status(404).send('User not found');
         }
 
-        res.render('user/userdash', { user , totalCart, totalOrders });
+        res.render('user/userdash', { user , totalCart, totalOrders , totalWishlist});
     } catch (err) {
         console.error('User Profile Error:', err);
         res.status(500).send('Internal Server Error');

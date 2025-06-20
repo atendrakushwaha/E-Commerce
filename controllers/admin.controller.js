@@ -15,12 +15,14 @@ exports.getAdminDashboard = async (req, res) => {
     const totalProducts = await ProductModel.countDocuments({ status: "approved" });
    const totalUsers = await Signup.countDocuments();
    const totalOrders = await Order.countDocuments();
+     const pendingProducts = await ProductModel.countDocuments({ status: "pending" }).populate('sellerId');
 
     res.render('admin/admindash', {
       user: req.user,
       totalProducts,
       totalUsers,
-      totalOrders
+      totalOrders,
+      pendingProducts
     });
   } catch (err) {
     console.error('Admin dashboard error:', err);
@@ -51,7 +53,7 @@ exports.product = async (req, res) => {
 
 exports.editProductPage = async (req, res) => {
   try {
-       if (!req.user || req.user.role !== 'admin') {
+       if (!req.user || req.user.role !== 'admin' && req.user.role !== 'seller') {
   return res.status(403).render('Massage/Error', {
     message: '⛔ Access Denied: Admins Only!',
     redirectUrl: '/',
@@ -70,7 +72,7 @@ exports.editProductPage = async (req, res) => {
 
 exports.editProduct = async (req, res) => {
   try {
-       if (!req.user || req.user.role !== 'admin') {
+       if (!req.user || req.user.role !== 'admin' && req.user.role !== 'seller') {
   return res.status(403).render('Massage/Error', {
     message: '⛔ Access Denied: Admins Only!',
     redirectUrl: '/',
@@ -97,7 +99,7 @@ exports.editProduct = async (req, res) => {
 
 exports.deleteProduct = async (req, res) => {
   try {
-      if (!req.user || req.user.role !== 'admin') {
+      if (!req.user || req.user.role !== 'admin' && req.user.role !== 'seller') {
   return res.status(403).render('Massage/Error', {
     message: '⛔ Access Denied: Admins Only!',
     redirectUrl: '/',
@@ -130,4 +132,31 @@ exports.updateProductStatus = async (req, res) => {
 };
 
 
+
+
+exports.getOrders = async (req, res) => {
+ try {
+        
+        // const seller = await Signup.findOne({ _id: userId, role: 'seller' });
+        const orders = await Order.find();
+        console.log(orders);
+        res.render('admin/orders', { orders });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+exports.updateOrderStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    await Order.findByIdAndUpdate(id, { status });
+    res.redirect('/admin/orders');
+  } catch (error) {
+    console.error("Error updating order status:", error);
+    res.status(500).send("Server Error");
+  }
+};
 
