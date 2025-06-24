@@ -3,70 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shopsy</title>
+  <title>TrendyShop</title>
+
+  <!-- ✅ DaisyUI + Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ✅ Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
-<body >
+<body class="bg-gray-50">
 
   <!-- 🌐 Header Navbar -->
-  <header class="bg-white shadow sticky top-0 z-50 ">
+  <header class="bg-white shadow sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
       <!-- 🔷 Logo -->
       <div class="text-2xl font-bold text-blue-600 cursor-pointer" onclick="window.location.href='/'">
-        Shopsy
+        TrendyShop
       </div>
 
-      <!-- 🔍 Search Bar (Smaller Width) -->
-      <div class="w-1/2 mx-4">
-        <input
-          type="text"
-          placeholder="Search for products"
-          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-sm"
-        />
+      <!-- 🔘 Toggle Button (Mobile Only) -->
+      <label class="btn btn-circle swap swap-rotate lg:hidden">
+        <input type="checkbox" id="menu-toggle" />
+        <!-- Hamburger Icon -->
+        <svg class="swap-off fill-current" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+          viewBox="0 0 512 512">
+          <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+        </svg>
+        <!-- Close Icon -->
+        <svg class="swap-on fill-current" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+          viewBox="0 0 512 512">
+          <polygon
+            points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
+        </svg>
+      </label>
+
+      <!-- 🔍 Search Bar (Visible on Large Screens) -->
+      <div class="w-1/2 mx-4 hidden lg:block">
+        <input type="text" placeholder="Search for products"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-sm" />
       </div>
 
-      <!-- 👤 User / Cart / Auth Buttons -->
+      <!-- 👤 Auth Section (Large screens) -->
       <% if (user) { %>
-      <div class="flex items-center gap-4">
-
-        <!-- 👤 Profile Section -->
-        <a href="
-          <% if (user.usertype === 'buyer'){ %>
-            /user
-            <% } else { %>
-              /seller<% } %>
-          " class="flex items-center gap-2 group hover:text-blue-600 transition cursor-pointer">
-          <div class="relative w-9 h-9">
-            <img src="/productimage/<%= user.pimage %>" alt="User" class="w-full h-full rounded-full border object-cover" />
+      <div class="hidden lg:flex items-center gap-4">
+        <a href="<%= user.usertype === 'buyer' ? '/user' : '/seller' %>" class="flex items-center gap-2 group hover:text-blue-600 transition">
+          <div class="w-9 h-9 relative">
+            <img src="/productimage/<%= user.pimage %>" alt="User" class="w-full h-full rounded-full object-cover border" />
           </div>
           <div class="flex items-center gap-1">
-            <span class="font-medium text-sm"><%= user.name %></span>
+            <span class="text-sm font-medium"><%= user.name %></span>
             <i class="fas fa-caret-down text-xs group-hover:rotate-180 transition-transform"></i>
           </div>
         </a>
-
-        <!-- 🛒 Cart Icon -->
-        <a href="/cart" class="relative hover:text-blue-600 transition text-lg">
-          <i class="fas fa-shopping-cart"></i>
-        </a>
-
-        <!-- 🚪 Logout -->
-        <a href="/logout" class="px-3 py-1.5 bg-red-500 text-white rounded hover:bg-red-600 text-sm transition">
-          Logout
-        </a>
+        <a href="/cart" class="text-lg hover:text-blue-600 transition"><i class="fas fa-shopping-cart"></i></a>
+        <a href="/logout" class="px-3 py-1.5 bg-red-500 text-white rounded hover:bg-red-600 text-sm transition">Logout</a>
       </div>
       <% } else { %>
-
-      <!-- 🔐 Login Button -->
-      <a href="/login" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm font-medium">
+      <a href="/login" class="hidden lg:inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm font-medium">
         Login
       </a>
       <% } %>
+    </div>
 
+    <!-- 📱 Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white px-6">
+      <% if (user) { %>
+      <div class="flex flex-col gap-4 py-4 border-t mt-2">
+        <a href="<%= user.usertype === 'buyer' ? '/user' : '/seller' %>" class="text-sm font-medium text-gray-800 hover:text-blue-600">👤 Profile</a>
+        <a href="/cart" class="text-sm font-medium text-gray-800 hover:text-blue-600">🛒 Cart</a>
+        <a href="/logout" class="text-sm font-medium text-red-600 hover:underline">🚪 Logout</a>
+      </div>
+      <% } else { %>
+      <div class="flex flex-col gap-4 py-4 border-t mt-2">
+        <a href="/login" class="text-sm font-medium text-blue-600 hover:underline">🔐 Login</a>
+      </div>
+      <% } %>
     </div>
   </header>
+
+  <!-- 🔽 Toggle Script -->
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle.addEventListener('change', function () {
+      if (this.checked) {
+        mobileMenu.classList.remove('max-h-0', 'overflow-hidden');
+        mobileMenu.classList.add('max-h-60', 'overflow-visible');
+      } else {
+        mobileMenu.classList.remove('max-h-60', 'overflow-visible');
+        mobileMenu.classList.add('max-h-0', 'overflow-hidden');
+      }
+    });
+  </script>
 
 </body>
 </html>
